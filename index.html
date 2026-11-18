@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Турнир • Championships516school</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0b0e1a;
+      background-image: radial-gradient(circle at 10% 20%, #1a1f2f 0%, #0b0e1a 90%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }
+
+    .paper {
+      max-width: 900px;
+      width: 100%;
+      background: #f5f2eb;
+      background-image: linear-gradient(145deg, #f8f5ef 0%, #ece7de 100%);
+      border-radius: 32px;
+      box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 215, 150, 0.2);
+      padding: 2.8rem 2.5rem;
+      border: 1px solid #d9cdb8;
+      position: relative;
+    }
+
+    .paper::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 28px;
+      pointer-events: none;
+      border: 1px solid rgba(200, 180, 155, 0.2);
+    }
+
+    .site-header {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #2c241a;
+      border-bottom: 3px double #c9b59b;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      text-shadow: 1px 1px 0 rgba(255, 215, 175, 0.3);
+      word-break: break-word;
+    }
+
+    .site-header small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #5f4e3a;
+      display: block;
+      margin-top: 0.2rem;
+      font-family: 'Segoe UI', sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    /* Навигация внутри листа */
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.8rem;
+    }
+
+    .nav-bar a {
+      background: #e6dccb;
+      color: #2d1f10;
+      text-decoration: none;
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid #b09a80;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .nav-bar a:hover {
+      background: #d6c8b2;
+      transform: translateY(-1px);
+    }
+
+    .content {
+      font-size: 1rem;
+      color: #1f1b16;
+    }
+
+    .content p {
+      margin-bottom: 1rem;
+    }
+
+    .content strong {
+      color: #2d1f10;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #2c241a;
+      margin-bottom: 0.6rem;
+      font-family: 'Times New Roman', 'Georgia', serif;
+    }
+
+    /* Блок 1: Игра */
+    .game-block {
+      background: #d6cbbc;
+      padding: 1.2rem 1.6rem;
+      border-radius: 24px;
+      margin: 1.4rem 0;
+      border: 1px solid #bcab93;
+      box-shadow: inset 0 2px 4px #e8ddce;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      background: #f1ebe1;
+      padding: 0.15rem 0.85rem;
+      border-radius: 30px;
+      margin: 0.2rem 0.3rem 0.4rem 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #2d1f10;
+      border: 1px solid #b09a80;
+    }
+
+    /* Блок 2: Условия участия */
+    .rule-block {
+      background: rgba(235, 222, 206, 0.45);
+      border-left: 4px solid #b39473;
+      padding: 1rem 1.5rem;
+      border-radius: 0 16px 16px 0;
+      margin: 1.6rem 0;
+    }
+
+    .content ul, .content ol {
+      padding-left: 1.6rem;
+      margin: 0.5rem 0 0.4rem 0;
+    }
+
+    .content li {
+      margin-bottom: 0.45rem;
+    }
+
+    .content li::marker {
+      color: #7a5f44;
+      font-weight: 600;
+    }
+
+    /* Блок 3: Участники */
+    .participants-block {
+      background: #e1d5c2;
+      padding: 1.3rem 1.6rem;
+      border-radius: 20px;
+      margin: 1.8rem 0 1.2rem 0;
+      border: 1px solid #cbb59a;
+      box-shadow: inset 0 1px 4px rgba(255, 235, 210, 0.6);
+    }
+
+    .add-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 0.8rem 0 1.2rem 0;
+    }
+
+    .add-form input {
+      flex: 1;
+      min-width: 170px;
+      padding: 0.55rem 0.9rem;
+      border-radius: 12px;
+      border: 1px solid #b09a80;
+      background: #f8f5ef;
+      color: #1f1b16;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .add-form input:focus {
+      border-color: #7a5f44;
+      background: #ffffff;
+    }
+
+    .btn-add {
+      background: #cbb59a;
+      color: #2d1f10;
+      border: 1px solid #9c8365;
+      padding: 0.55rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-add:hover {
+      background: #bda384;
+    }
+
+    .participants-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.7rem;
+    }
+
+    .participant-card {
+      background: #f5f2eb;
+      border: 1px solid #bcab93;
+      border-radius: 14px;
+      padding: 0.65rem 0.9rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(44, 36, 26, 0.06);
+    }
+
+    .p-info strong {
+      display: block;
+      font-size: 0.95rem;
+      color: #2c241a;
+    }
+
+    .p-info span {
+      font-size: 0.85rem;
+      color: #5f4e3a;
+    }
+
+    .signature {
+      margin-top: 1.8rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #b8a58b;
+      font-style: italic;
+      color: #3b3227;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .social-links {
+      margin-top: 1.2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid #d2c2ab;
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: inline-block;
+      background: #e6dccb;
+      color: #2d1f10;
+      text-decoration: none;
+      padding: 0.4rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid #b09a80;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .social-links a:hover {
+      background: #d6c8b2;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 600px) {
+      .paper { padding: 1.8rem 1.2rem; }
+      .site-header { font-size: 1.8rem; }
+      .content { font-size: 0.95rem; }
+      .game-block, .participants-block { padding: 1rem; }
+      .rule-block { padding: 0.8rem 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .site-header { font-size: 1.5rem; }
+      .paper { padding: 1.2rem 0.8rem; border-radius: 20px; }
+      .signature { flex-direction: column; gap: 0.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="paper">
+    <div class="site-header">
+      Championships516school
+      <small>киберспортивные турниры • 516 школа</small>
+    </div>
+
+    <!-- Навигация по пунктам -->
+    <div class="nav-bar">
+      <a href="#game">⚡ Игра</a>
+      <a href="#rules">📜 Условия участия</a>
+      <a href="#participants">👥 Участники</a>
+    </div>
+
+    <div class="content">
+      <!-- Пункт 1: Игра -->
+      <div class="game-block" id="game">
+        <div class="section-title">⚡ Дисциплина турнира (Игра):</div>
+        <div>
+          <span class="tag-pill">Brawl Stars / Shadow Fight 4</span>
+          <span class="tag-pill">Формат: 1 на 1</span>
+          <span class="tag-pill">Вход свободный</span>
+        </div>
+        <p style="margin-top: 0.5rem; margin-bottom: 0;">
+          <strong>Описание:</strong> Укажите здесь конкретную игру, режим и систему проведения (например, олимпийская система на выбывание или круговая). Матчи проводятся на смартфонах участников.
+        </p>
+      </div>
+
+      <!-- Пункт 2: Условия участия -->
+      <div class="rule-block" id="rules">
+        <div class="section-title">📜 Условия участия:</div>
+        <ol>
+          <li><strong>Кто может участвовать:</strong> все желающие ученики 516 школы. Главное — наличие телефона, интернета и установленной игры.</li>
+          <li><strong>Регистрация:</strong> необходимо записаться в список участников ниже (указать имя, фамилию и класс) до старта турнира.</li>
+          <li><strong>Время и место:</strong> игры проходят строго на переменах (начиная с перемены после 5-го урока 1-й смены).</li>
+          <li><strong>Честная игра:</strong> запрещены читы, сторонние программы, оскорбления и любое внешнее вмешательство (толкания, тыканье в экран).</li>
+          <li><strong>Оборудование:</strong> рекомендуется отключить уведомления. Звук разрешен только в одном наушнике.</li>
+        </ol>
+      </div>
+
+      <!-- Пункт 3: Участники -->
+      <div class="participants-block" id="participants">
+        <div class="section-title">👥 Участники турнира (<span id="count">0</span>):</div>
+        <p style="font-size: 0.92rem; margin-bottom: 0.5rem;">Заполните форму ниже, чтобы добавить игрока в список:</p>
+
+        <div class="add-form">
+          <input type="text" id="pName" placeholder="Имя и Фамилия" />
+          <input type="text" id="pClass" placeholder="Класс (например, 9А)" />
+          <button class="btn-add" onclick="addParticipant()">+ Добавить</button>
+        </div>
+
+        <div class="participants-grid" id="participantsList"></div>
+      </div>
+
+      <div class="signature">
+        <span>© Лукин Владимир · 11 класс</span>
+        <span>Championships516school</span>
+      </div>
+
+      <div class="social-links">
+        <a href="https://vk.ru/championships_516" target="_blank" rel="noopener noreferrer">Группа ВКонтакте</a>
+        <a href="https://tiktok.com/@516_championship" target="_blank" rel="noopener noreferrer">Канал в TikTok</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Список участников (можно редактировать вручную прямо в этом массиве)
+    let participants = JSON.parse(localStorage.getItem('championship516_players')) || [
+      { name: "Лукин Владимир", class: "11 класс" }
+    ];
+
+    function renderParticipants() {
+      const list = document.getElementById('participantsList');
+      const count = document.getElementById('count');
+      list.innerHTML = '';
+      count.textContent = participants.length;
+
+      participants.forEach((p) => {
+        const card = document.createElement('div');
+        card.className = 'participant-card';
+        card.innerHTML = `
+          <div class="p-info">
+            <strong>${p.name}</strong>
+            <span>${p.class}</span>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function addParticipant() {
+      const nameInput = document.getElementById('pName');
+      const classInput = document.getElementById('pClass');
+
+      if (!nameInput.value.trim() || !classInput.value.trim()) {
+        alert('Введите имя, фамилию и класс!');
+        return;
+      }
+
+      participants.push({
+        name: nameInput.value.trim(),
+        class: classInput.value.trim()
+      });
+
+      localStorage.setItem('championship516_players', JSON.stringify(participants));
+      nameInput.value = '';
+      classInput.value = '';
+      renderParticipants();
+    }
+
+    renderParticipants();
+  </script>
+</body>
+</html>
